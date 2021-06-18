@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
-
+use app\models\Jurusan;
+use app\models\Prodi;
 /* @var $this yii\web\View */
 /* @var $model app\models\Mahasiswa */
 /* @var $form yii\widgets\ActiveForm */
@@ -39,15 +40,26 @@ use yii\helpers\ArrayHelper;
             }
             ]
     ) ?>
-        <?php
-            $dataPost=ArrayHelper::map(\app\models\Prodi::find()->asArray()
-                ->all(), 'id', 'prodi');
-            echo $form->field($model, 'id_prodi')
-            ->dropDownList(
-                $dataPost,           
-                ['id'=>'prodi']
-            );
-        ?>
+
+
+<?= $form->field($model, 'id_jurusan')->dropDownList(
+        ArrayHelper::map(\app\models\Jurusan::find()->all(),'id','jurusan'),
+        [
+            'prompt'=>'Pilih Jurusan',
+            'onchange'=>'
+                $.post("index.php?r=prodi/lists&id='.'"+$(this).val(),function(data)
+                { $("select#prodi_id_prodi" ).html(data);
+            });'
+        ]
+    ); ?>
+
+     <?= $form->field($model, 'id_prodi')->dropDownList(
+        ArrayHelper::map(\app\models\Prodi::find()->all(),'id','prodi'),
+        [
+            'prompt'=>'Pilih Prodi',
+        ]
+    ) ?>
+
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

@@ -40,6 +40,7 @@ class Mahasiswa extends \yii\db\ActiveRecord
             [['nama', 'tanggal_lahir'], 'string', 'max' => 50],
             [['jekel'], 'string', 'max' => 1],
             [['email', 'alamat'], 'string', 'max' => 100],
+            [['id_jurusan'], 'exist', 'skipOnError' => true, 'targetClass' => Jurusan::className(), 'targetAttribute' => ['id_jurusan' => 'id']],
             [['id_prodi'], 'exist', 'skipOnError' => true, 'targetClass' => Prodi::className(), 'targetAttribute' => ['id_prodi' => 'id']],
         ];
     }
@@ -55,6 +56,7 @@ class Mahasiswa extends \yii\db\ActiveRecord
             'nama' => 'Nama',
             'tanggal_lahir' => 'Tanggal Lahir',
             'jekel' => 'Jekel',
+            'id_jurusan' => 'Id Jurusan',
             'id_prodi' => 'Id Prodi',
             'email' => 'Email',
             'alamat' => 'Alamat',
@@ -69,5 +71,9 @@ class Mahasiswa extends \yii\db\ActiveRecord
     public function getProdi()
     {
         return $this->hasOne(Prodi::className(), ['id' => 'id_prodi']);
+    }
+    public function getJurusan()
+    {
+        return $this->hasOne(Jurusan::className(), ['id' => 'id_jurusan']);
     }
 }
