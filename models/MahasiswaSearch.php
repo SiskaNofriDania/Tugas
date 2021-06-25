@@ -17,8 +17,7 @@ class MahasiswaSearch extends Mahasiswa
     public function rules()
     {
         return [
-            [['id', 'id_jurusan'], 'integer'],
-            [['id', 'id_prodi'], 'integer'],
+            [['id', 'id_jurusan', 'id_prodi'], 'integer'],
             [['nim', 'nama', 'tanggal_lahir', 'jekel', 'email', 'alamat'], 'safe'],
         ];
     }
@@ -60,6 +59,7 @@ class MahasiswaSearch extends Mahasiswa
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_jurusan' => $this->id_jurusan,
             'id_prodi' => $this->id_prodi,
         ]);
 

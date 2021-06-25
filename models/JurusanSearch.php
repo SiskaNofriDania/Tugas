@@ -17,8 +17,8 @@ class JurusanSearch extends Jurusan
     public function rules()
     {
         return [
-            [['id', 'id_prodi'], 'integer'],
-            [['jurusan', 'keterangan'], 'safe'],
+            [['id_jurusan', 'kode_jurusan'], 'integer'],
+            [['nama_jurusan'], 'safe'],
         ];
     }
 
@@ -58,12 +58,11 @@ class JurusanSearch extends Jurusan
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'id_prodi' => $this->id_prodi,
+            'id_jurusan' => $this->id_jurusan,
+            'kode_jurusan' => $this->kode_jurusan,
         ]);
 
-        $query->andFilterWhere(['like', 'jurusan', $this->jurusan])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan]);
+        $query->andFilterWhere(['like', 'nama_jurusan', $this->nama_jurusan]);
 
         return $dataProvider;
     }

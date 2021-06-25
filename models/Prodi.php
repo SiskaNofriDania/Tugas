@@ -8,10 +8,9 @@ use Yii;
  * This is the model class for table "prodi".
  *
  * @property int $id
- * @property string|null $prodi
- * @property string|null $keterangan
- *
- * @property Mahasiswa[] $mahasiswas
+ * @property int $id_jurusan
+ * @property string $prodi
+ * @property string $keterangan
  */
 class Prodi extends \yii\db\ActiveRecord
 {
@@ -29,6 +28,8 @@ class Prodi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_jurusan', 'prodi', 'keterangan'], 'required'],
+            [['id_jurusan'], 'integer'],
             [['prodi', 'keterangan'], 'string', 'max' => 50],
         ];
     }
@@ -40,18 +41,20 @@ class Prodi extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'id_jurusan' => 'Id Jurusan',
             'prodi' => 'Prodi',
             'keterangan' => 'Keterangan',
         ];
     }
 
-    /**
-     * Gets query for [[Mahasiswas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMahasiswas()
-    {
-        return $this->hasMany(Mahasiswa::className(), ['id_prodi' => 'id']);
+    public static function getProdiList($jurusanID, $dependent = false){
+        $subCategory = self::find()
+            ->select(['prodi as name', 'id'])
+            ->where(['id_jurusan' => $jurusanID])
+            ->asArray()
+            ->all();
+
+        return $subCategory;
     }
+
 }

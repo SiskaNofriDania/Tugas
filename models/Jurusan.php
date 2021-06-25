@@ -7,12 +7,9 @@ use Yii;
 /**
  * This is the model class for table "jurusan".
  *
- * @property int $id
- * @property int $id_prodi
- * @property string $jurusan
- * @property string $keterangan
- *
- * @property Prodi $prodi
+ * @property int $id_jurusan
+ * @property int $kode_jurusan
+ * @property string $nama_jurusan
  */
 class Jurusan extends \yii\db\ActiveRecord
 {
@@ -30,10 +27,9 @@ class Jurusan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_prodi', 'jurusan', 'keterangan'], 'required'],
-            [['id_prodi'], 'integer'],
-            [['jurusan', 'keterangan'], 'string', 'max' => 70],
-            [['id_prodi'], 'exist', 'skipOnError' => true, 'targetClass' => Prodi::className(), 'targetAttribute' => ['id_prodi' => 'id']],
+            [['kode_jurusan', 'nama_jurusan'], 'required'],
+            [['kode_jurusan'], 'integer'],
+            [['nama_jurusan'], 'string', 'max' => 50],
         ];
     }
 
@@ -43,20 +39,14 @@ class Jurusan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_prodi' => 'Id Prodi',
-            'jurusan' => 'Jurusan',
-            'keterangan' => 'Keterangan',
+            'id_jurusan' => 'Id Jurusan',
+            'kode_jurusan' => 'Kode Jurusan',
+            'nama_jurusan' => 'Nama Jurusan',
         ];
     }
 
-    /**
-     * Gets query for [[Prodi]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProdi()
-    {
-        return $this->hasOne(Prodi::className(), ['id' => 'id_prodi']);
+    public static function getJurusan(){
+        return Self::find()->select(['nama_jurusan','id_jurusan'])->indexBy('id_jurusan')->column();
     }
+
 }

@@ -6,6 +6,9 @@ use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use app\models\Jurusan;
 use app\models\Prodi;
+use yii\helpers\Url;
+use kartik\depdrop\DepDrop;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Mahasiswa */
 /* @var $form yii\widgets\ActiveForm */
@@ -42,23 +45,21 @@ use app\models\Prodi;
     ) ?>
 
 
-<?= $form->field($model, 'id_jurusan')->dropDownList(
-        ArrayHelper::map(\app\models\Jurusan::find()->all(),'id','jurusan'),
-        [
-            'prompt'=>'Pilih Jurusan',
-            'onchange'=>'
-                $.post("index.php?r=prodi/lists&id='.'"+$(this).val(),function(data)
-                { $("select#prodi_id_prodi" ).html(data);
-            });'
-        ]
-    ); ?>
-
-     <?= $form->field($model, 'id_prodi')->dropDownList(
-        ArrayHelper::map(\app\models\Prodi::find()->all(),'id','prodi'),
-        [
-            'prompt'=>'Pilih Prodi',
-        ]
-    ) ?>
+<?= $form->field($model, 'id_jurusan')->dropDownList(Jurusan::getJurusan(),
+        ['id' => 'jurusan','prompt' => 'select Jurusan...'])
+       ?>
+        
+    <?=
+        $form->field($model, 'id_prodi')->widget(DepDrop::classname(),[
+            'data' => Prodi::getProdiList($model->id_jurusan),
+            'options' => ['id' => 'prodi','prompt' => 'select Jurusan...'],
+            'pluginOptions' => [
+                'depends' => ['jurusan'],
+                'placeholder' => 'select prodi...',
+                'url' => Url::to(['mahasiswa/subcat'])
+            ]
+        ])
+    ?>
 
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
