@@ -49,9 +49,9 @@ use kartik\depdrop\DepDrop;
         ['id' => 'jurusan','prompt' => 'select Jurusan...'])
        ?>
         
-    <?=
+        <?=
         $form->field($model, 'id_prodi')->widget(DepDrop::classname(),[
-            'data' => Prodi::getProdiList($model->id_jurusan),
+            'data' => Prodi::getProdiList($model->id_jurusan, $model->nim),
             'options' => ['id' => 'prodi','prompt' => 'select Jurusan...'],
             'pluginOptions' => [
                 'depends' => ['jurusan'],

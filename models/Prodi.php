@@ -47,14 +47,18 @@ class Prodi extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getProdiList($jurusanID, $dependent = false){
-        $subCategory = self::find()
-            ->select(['prodi as name', 'id'])
-            ->where(['id_jurusan' => $jurusanID])
-            ->asArray()
-            ->all();
 
-        return $subCategory;
+
+    public static function getProdiList($cat_id, $dependent = false){
+        $subCategory = self::find()
+        ->where(['id_jurusan'=>$cat_id]);
+
+        if($dependent == ""){
+            return $subCategory->select(['id','prodi as name'])->asArray()->all();
+        }else{
+            return $subCategory->select(['prodi'])->indexBy('id')->column();
+        } 
+
     }
 
 }
