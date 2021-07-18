@@ -1,16 +1,14 @@
 <?php
 
 namespace app\controllers;
-
 use Yii;
 use app\models\Mahasiswa;
 use app\models\MahasiswaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Jurusan;
 use app\models\Prodi;
-
+use yii\web\UploadedFile;
 
 /**
  * MahasiswaController implements the CRUD actions for Mahasiswa model.
@@ -20,6 +18,25 @@ class MahasiswaController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    public function actionSubcat(){
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])){
+            $parents = $_POST['depdrop_parents'];
+            if($parents != null){
+                $prodi = $parents[0];
+                $out = Prodi::getProdiList($prodi);
+                return ['output'=>$out, 'selected'=>''];
+            }
+        }
+        return ['output'=>'','selected'=>''];
+    }
+
+
+
+
+
     public function behaviors()
     {
         return [
@@ -68,8 +85,14 @@ class MahasiswaController extends Controller
     public function actionCreate()
     {
         $model = new Mahasiswa();
+         Yii::$app->params['uploadPath'] = Yii::$app->basePath .'/web/img/';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $img = UploadedFile::getInstance($model,'gambar');
+            $model->foto = $img->name;
+            $model->gambar = $img;
+            $model->save();
+            $model->gambar->saveAs(Yii::$app->params['uploadPath'].$model->gambar);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -88,8 +111,18 @@ class MahasiswaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        Yii::$app->params['uploadPath'] = Yii::$app->basePath .'/web/img/';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $old = $model->foto;
+            if($old!=""){
+                unlink(Yii::$app->basePath .'/web/img/' . $old);
+            }
+            $img = UploadedFile::getInstance($model,'gambar');
+            $model->foto = $img->name;
+            $model->gambar = $img;
+            $model->save();
+            $model->gambar->saveAs(Yii::$app->params['uploadPath'].$model->gambar);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -127,20 +160,4 @@ class MahasiswaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-    
-    public function actionSubcat(){
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $out = [];
-        if (isset($_POST['depdrop_parents'])){
-            $parents = $_POST['depdrop_parents'];
-            if($parents != null){
-                $prodi = $parents[0];
-                $out = Prodi::getProdiList($prodi);
-                return ['output'=>$out, 'selected'=>''];
-            }
-        }
-        return ['output'=>'','selected'=>''];
-
-}
 }

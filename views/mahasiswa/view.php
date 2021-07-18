@@ -38,7 +38,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_prodi',
             'email:email',
             'alamat',
+            [
+                'attribute' => 'foto',
+                'format' => 'raw',
+                'value' => function($data){
+                    if(!is_null($data->foto)){
+                        return Html::img(Yii::$app->homeUrl . 'img/' . $data->foto,
+                        ['style' => 'width:50px;height:auto;']
+                    );
+                    }else{
+                        return NULL;
+                    }
+                }
+            ],
         ],
+
     ]) ?>
 
 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2021 at 06:26 PM
+-- Generation Time: Jul 18, 2021 at 07:02 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -164,25 +164,27 @@ CREATE TABLE `mahasiswa` (
   `id_jurusan` int(11) NOT NULL,
   `id_prodi` int(11) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `alamat` varchar(100) DEFAULT NULL
+  `alamat` varchar(100) DEFAULT NULL,
+  `foto` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`id`, `nim`, `nama`, `tanggal_lahir`, `jekel`, `id_jurusan`, `id_prodi`, `email`, `alamat`) VALUES
-(2, '1911082111', 'Conan', '17-Feb-2000', 'L', 2, 2, 'conan@gmail.com', 'Bandung'),
-(3, '1911081024', 'Siska Nofri Dania', '03-Nov-2001', 'P', 1, 1, 'daniasiskanofri@gmail.com', 'Kp,jambu Pariaman'),
-(4, '1911087777', 'Digimon', '20-Jun-1999', 'L', 4, 4, 'digimon@gmail.com', 'Padang'),
-(5, '1911081111', 'Saylor moon', '01-Nov-2003', 'P', 6, 15, 'say@gmail.com', 'Suger'),
-(6, '1911080111', 'Papazola', '02-Jun-1998', 'L', 7, 18, 'papaz@gmail.com', 'Jakarta'),
-(7, '1911080199', 'Yaya', '04-Jul-2001', 'L', 4, 4, 'yayay@gmail.com', 'Sulim'),
-(8, '1911080810', 'Ying', '05-Aug-2002', 'P', 2, 2, 'ying@gmail.com', 'Palembang'),
-(9, '1911080988', 'Ocobot', '02-Sep-1987', 'L', 3, 9, 'ocobot@gmail.com', 'Padang'),
-(10, '1911081079', 'Gopal', '02-May-2000', 'L', 1, 16, 'gopal@gmail.com', 'Kp,Baru Padang'),
-(11, '1911080923', 'Adambes', '19-Feb-2021', 'L', 3, 10, 'adambes@gmail.com', 'Tanggerang'),
-(12, '1911082010', 'Noillaaaa', '13-Feb-2021', 'P', 1, 1, 'nola@gmail.com', 'Agammm');
+INSERT INTO `mahasiswa` (`id`, `nim`, `nama`, `tanggal_lahir`, `jekel`, `id_jurusan`, `id_prodi`, `email`, `alamat`, `foto`) VALUES
+(3, '1911081024', 'Siska Nofri Dania', '03-Nov-2001', 'P', 1, 1, 'daniasiskanofri@gmail.com', 'Kp,jambu Pariaman', 'Siska Nofri Dania.jpeg'),
+(4, '1911087777', 'Lilis', '20-Jun-1999', 'L', 4, 4, 'Lilis@gmail.com', 'Padang', 'Lilis.jpg'),
+(5, '1911081111', 'Saylor moon', '01-Nov-2003', 'P', 6, 15, 'say@gmail.com', 'Suger', 'Say.jpg'),
+(6, '1911080111', 'Papazola', '02-Jun-1998', 'L', 7, 18, 'papaz@gmail.com', 'Jakarta', 'Conan.jpg'),
+(7, '1911080199', 'Yaya', '04-Jul-2001', 'L', 4, 4, 'yayay@gmail.com', 'Sulim', 'yaya.jpg'),
+(8, '1911080810', 'Ying', '05-Aug-2002', 'P', 2, 2, 'ying@gmail.com', 'Palembang', 'Ying.jpg'),
+(9, '1911080988', 'Ocobot', '02-Sep-1987', 'L', 3, 9, 'ocobot@gmail.com', 'Padang', 'Ocobot.jpg'),
+(10, '1911081079', 'Gopal', '02-May-2000', 'L', 1, 16, 'gopal@gmail.com', 'Kp,Baru Padang', 'Goap.jpg'),
+(11, '1911080923', 'Adambes', '19-Feb-2021', 'L', 3, 10, 'adambes@gmail.com', 'Tanggerang', 'Adambes.jpg'),
+(12, '1911082010', 'Noillaaaa', '13-Feb-2021', 'P', 1, 1, 'nola@gmail.com', 'Agammm', 'Noila.jpg'),
+(13, '19110821101', 'iha', '03-Jul-2021', 'P', 2, 2, 'iha@gamil.com', 'batu', 'Iha.jpg'),
+(14, '19110821101', 'Conan Putra', '13-Feb-2021', 'L', 1, 1, 'cp@gmail.com', 'Batu Basa', 'Conon Putra.jpg');
 
 -- --------------------------------------------------------
 
@@ -319,7 +321,7 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `prodi`

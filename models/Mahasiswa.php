@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+use yii\web\UploadedFile;
+
+
 /**
  * This is the model class for table "mahasiswa".
  *
@@ -19,6 +22,7 @@ use Yii;
  */
 class Mahasiswa extends \yii\db\ActiveRecord
 {
+    public $gambar;
     /**
      * {@inheritdoc}
      */
@@ -39,6 +43,9 @@ class Mahasiswa extends \yii\db\ActiveRecord
             [['nama', 'tanggal_lahir'], 'string', 'max' => 50],
             [['jekel'], 'string', 'max' => 1],
             [['email', 'alamat'], 'string', 'max' => 100],
+            ['foto', 'string', 'max' => 100],
+            ['gambar','file','extensions' => 'jpg, jpeg, png'],
+
         ];
     }
 
@@ -57,6 +64,7 @@ class Mahasiswa extends \yii\db\ActiveRecord
             'id_prodi' => 'Id Prodi',
             'email' => 'Email',
             'alamat' => 'Alamat',
+            'foto' => 'Foto',
         ];
     }
 

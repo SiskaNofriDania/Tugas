@@ -65,6 +65,7 @@ use kartik\depdrop\DepDrop;
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'alamat')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'gambar')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
